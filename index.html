@@ -4,53 +4,43 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Wonder Slices</title>
-  <style>
-    html, body {
-      margin: 0;
-      padding: 0;
-      height: 100%;
-      overflow: hidden;
-    }
-
-    body {
-      background-color: black;
-    }
-
-    .background {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      object-fit: cover;
-      z-index: -1;
-    }
-
-    .desktop-img {
-      display: block;
-    }
-
-    .mobile-img {
-      display: none;
-    }
-
-    @media (max-width: 768px) {
-      .desktop-img {
-        display: none;
-      }
-
-      .mobile-img {
-        display: block;
-      }
-    }
-  </style>
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <!-- Desktop (PC) full background -->
-  <!--<img src="New Project.png" alt="Wonder Slices PC" class="background desktop-img" /> -->
-  <img src="WSX.jpg" alt="Wonder Slices PC" class="background desktop-img" />
 
-  <!-- Mobile (Android) full background -->
+  <!-- Loading screen with 2 full-screen animated layers -->
+  <div id="loading">
+    <img src="WSL1.svg" alt="Loading 1" class="loading-img first" />
+    <img src="WSL2.svg" alt="Loading 2" class="loading-img second" />
+  </div>
+
+  <!-- Background image (revealed after loading) -->
+  <img src="WSX.jpg" alt="Wonder Slices PC" class="background desktop-img" />
   <img src="android.jpg" alt="Wonder Slices Android" class="background mobile-img" />
+
+  <!-- Fade logic -->
+  <script>
+    window.addEventListener("load", () => {
+      const loading = document.getElementById("loading");
+      const first = document.querySelector(".first");
+      const second = document.querySelector(".second");
+
+      // Fade out WSL2
+      setTimeout(() => {
+        second.classList.add("fade-out");
+      }, 3000);
+
+      // Fade out WSL1
+      setTimeout(() => {
+        first.classList.add("fade-out");
+      }, 4000);
+
+      // Remove loading overlay
+      setTimeout(() => {
+        loading.remove();
+      }, 8000);
+    });
+  </script>
+
 </body>
 </html>

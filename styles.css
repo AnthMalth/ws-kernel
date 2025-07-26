@@ -1,0 +1,78 @@
+/* Reset */
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  background-color: black;
+}
+
+/* Background image */
+.background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
+  z-index: -1;
+}
+
+.desktop-img {
+  display: block;
+}
+
+.mobile-img {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .desktop-img { display: none; }
+  .mobile-img { display: block; }
+}
+
+/* Loading overlay */
+#loading {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 9999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  pointer-events: none;
+}
+
+/* Initial state: fullscreen image with optional pulse */
+.loading-img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
+  will-change: opacity, transform;
+  transition: none;
+}
+
+/* Smooth fade-out with radial mask */
+.fade-out {
+  animation: fadeOutRadial 2s ease-in-out forwards;
+}
+
+/* Radial fade-out effect */
+@keyframes fadeOutRadial {
+  0% {
+    opacity: 1;
+    mask-image: radial-gradient(circle at center, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 1) 100%);
+  }
+  100% {
+    opacity: 0;
+    mask-image: radial-gradient(circle at center, rgba(0, 0, 0, 0) 60%, rgba(0, 0, 0, 0) 100%);
+  }
+}
