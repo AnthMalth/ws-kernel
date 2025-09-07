@@ -4,44 +4,148 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Wonder Slices</title>
-    <link rel="icon" href="init_image/WSIcon.png" type="image/png" />
+  <link rel="icon" href="init_image/WSIcon.png" type="image/png" />
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
 
-  <!-- Loading screen with 2 full-screen animated layers -->
+<!-- Recent News Slide Images -->
+<img src="init_image/RecentNews01.webp" alt="Recent News 1" id="recentNews1" class="recent-news-slide" />
+<img src="init_image/RecentNews02.webp" alt="Recent News 2" id="recentNews2" class="recent-news-slide hidden" />
+<!-- Photo Gallery Images -->
+<img src="init_image/PhotoGallery01.webp" alt="Photo Gallery 1" class="photo-gallery" style="--y: 3500px;" />
+<img src="init_image/PhotoGallery02.webp" alt="Photo Gallery 2" class="photo-gallery" style="--y: 3500px;" />
+<img src="init_image/PhotoGallery03.webp" alt="Photo Gallery 3" class="photo-gallery" style="--y: 3500px;" />
+<img src="init_image/PhotoGallery04.webp" alt="Photo Gallery 4" class="photo-gallery" style="--y: 3500px;" />
+<img src="init_image/PhotoGallery05.webp" alt="Photo Gallery 5" class="photo-gallery" style="--y: 3500px;" />
+<img src="init_image/PhotoGallery06.webp" alt="Photo Gallery 6" class="photo-gallery" style="--y: 3500px;" />
+
+
+
+<!-- LIGHTS positioned behind the top banner -->
+<img src="init_image/Lights_First.webp" id="light1" class="top-light" alt="Light 1" />
+<img src="init_image/Lights_Sec.webp" id="light2" class="top-light" alt="Light 2" />
+<img src="init_image/Lights_Third.webp" id="light3" class="top-light" alt="Light 3" />
+
+
+  <!-- Top Bar Banner (immediately visible, scrolls away naturally) -->
+  <img src="init_image/TopBarTitle.webp" alt="Wonder Slices Title" id="topBanner" class="top-banner" />
+
+  <!-- Loading screen -->
   <div id="loading">
     <img src="svg/WSL1.svg" alt="Loading 1" class="loading-img first" />
-    <img src="svg/WSL2.svg" alt="Loading 2" class="loading-img second" />
+    <img src="init_image/LWS.webp" alt="Loading 2" class="loading-img second" />
   </div>
+  
+  <!-- Main content -->
+  <img src="WonderSlicesWeb.webp" alt="Wonder Slices PC" class="scrolling-image desktop-img" />
+  <img src="android.jpg" alt="Wonder Slices Android" class="scrolling-image mobile-img" />
 
-  <!-- Background image (revealed after loading) -->
-  <img src="WSX.jpg" alt="Wonder Slices PC" class="background desktop-img" />
-  <img src="android.jpg" alt="Wonder Slices Android" class="background mobile-img" />
-
-  <!-- Fade logic -->
+  <!-- Fade + Bounce Animation -->
   <script>
     window.addEventListener("load", () => {
       const loading = document.getElementById("loading");
       const first = document.querySelector(".first");
       const second = document.querySelector(".second");
 
-      // Fade out WSL2
+      let startTime = null;
+      let bounceActive = true;
+
+      function smoothBounce(timestamp) {
+        if (!startTime) startTime = timestamp;
+        const elapsed = timestamp - startTime;
+        const scale = 1 + 0.25 * Math.sin(elapsed / 200);
+
+        if (bounceActive) {
+          second.style.transform = `scale(${scale})`;
+          requestAnimationFrame(smoothBounce);
+        }
+      }
+
+      requestAnimationFrame(smoothBounce);
+
       setTimeout(() => {
-        second.classList.add("fade-out");
+        bounceActive = false;
+        second.style.opacity = "0";
       }, 2000);
 
-      // Fade out WSL1
       setTimeout(() => {
-        first.classList.add("fade-out");
+        first.style.opacity = "0";
       }, 4000);
 
-      // Remove loading overlay
       setTimeout(() => {
         loading.remove();
-      }, 8000);
+      }, 6000);
     });
   </script>
+  
+<script src="lights.js"></script>
+
+<script>
+  window.addEventListener("load", () => {
+    const img1 = document.getElementById("recentNews1");
+    const img2 = document.getElementById("recentNews2");
+
+    let showingFirst = true;
+
+    function cycleImages() {
+      if (showingFirst) {
+        // Step 1: slide img1 out
+        img1.classList.add("slide-out-left");
+
+        // Step 2: bring in img2
+        img2.classList.remove("hidden");
+        img2.classList.add("slide-in-right");
+
+        // Step 3: after animation, cleanup
+        setTimeout(() => {
+          img1.classList.remove("slide-out-left");
+          img1.classList.add("hidden");
+
+          img2.classList.remove("slide-in-right");
+
+          showingFirst = false;
+        }, 1000); // wait for 1s animation to complete
+      } else {
+        // Step 1: slide img2 out
+        img2.classList.add("slide-out-left");
+
+        // Step 2: bring in img1
+        img1.classList.remove("hidden");
+        img1.classList.add("slide-in-right");
+
+        // Step 3: after animation, cleanup
+        setTimeout(() => {
+          img2.classList.remove("slide-out-left");
+          img2.classList.add("hidden");
+
+          img1.classList.remove("slide-in-right");
+
+          showingFirst = true;
+        }, 1000);
+      }
+    }
+
+    // Start after 6s, then repeat every 6s
+    setTimeout(() => {
+      cycleImages();
+      setInterval(cycleImages, 20000);
+    }, 20000);
+  });
+</script>
+
+
+<script>
+    window.addEventListener("load", () => {
+      document.querySelectorAll(".photo-gallery").forEach(img => {
+        // random delay between 0 and 6s
+        const randomDelay = (Math.random() * 6).toFixed(2) + "s";
+        img.style.setProperty("--delay", randomDelay);
+      });
+    });
+  </script>
+
+
 
 </body>
 </html>
