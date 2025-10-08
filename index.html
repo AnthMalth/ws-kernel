@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+
+<!-- ✅ Website Icon (favicon) -->
+<!-- Replace "icon.png" with your actual icon filename and extension -->
+<link rel="icon" type="image/png" href="icon.png">
+<!-- You can also add this for Apple/Android shortcut icons -->
+<link rel="apple-touch-icon" href="icon.png">
+
+<title>Wonder Slices Layered Display</title>
+
+<style>
+  html, body {
+    margin: 0;
+    background: #000;
+    overflow-x: hidden;
+  }
+
+  /* === Top Bar (image + overlaid title) === */
+  .topbar {
+    position: fixed;
+    inset: 0 0 auto 0;   /* top:0; left/right:0 */
+    z-index: 9999;
+    pointer-events: none; /* decorative only */
+  }
+
+  .topbar__bar {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  /* Title sits above the bar, larger and responsive */
+  .topbar__title {
+    position: fixed;      /* stays aligned to the viewport with the bar */
+    top: clamp(34px, 1.2vw, 14px);
+    left: clamp(120px, 1.6vw, 24px);
+    z-index: 10000;
+    pointer-events: none;
+    /* size: grows with viewport but capped */
+    height: clamp(38px, 6vw, 100px);
+    width: auto;
+    display: block;
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+  }
+
+  /* === Main section setup === */
+  section {
+    position: relative;
+    width: 100%;
+    overflow: visible; /* show torn edges */
+    z-index: 0;
+  }
+
+  section img {
+    width: 100%;
+    height: auto;
+    display: block;
+    pointer-events: none;
+    image-rendering: crisp-edges;
+    image-rendering: -webkit-optimize-contrast;
+  }
+
+  /* Layer stacking */
+  #purple { z-index: 1; }
+  #peach  { z-index: 2; margin-top: clamp(-100px, -6vw, -120px); }
+  #blue   { z-index: 3; margin-top: clamp(-100px, -12vw, -240px); }
+  #red    { z-index: 4; margin-top: clamp(-100px, -18vw, -360px); }
+
+  /* Smooth scrolling */
+  html { scroll-behavior: smooth; }
+</style>
+</head>
+<body>
+
+  <div class="topbar">
+    <img class="topbar__bar" src="TopBar/topbar.webp" alt="Top bar">
+  </div>
+  <img class="topbar__title" src="TopBar/TopBarTitle.webp" alt="Wonder Slices">
+
+  <section id="purple">
+    <img src="Main/cosmetic_purple_wonder.webp" alt="Purple section">
+  </section>
+
+  <section id="peach">
+    <img src="Main/cosmetic_peach.webp" alt="Peach section">
+  </section>
+
+  <section id="blue">
+    <img src="Main/cosmetic_blue.webp" alt="Blue section">
+  </section>
+
+  <section id="red">
+    <img src="Main/cosmetic_red.webp" alt="Red section">
+  </section>
+
+  <script>
+  // Disable Ctrl + scroll (mouse wheel or touchpad pinch)
+  window.addEventListener('wheel', function (e) {
+    if (e.ctrlKey) {
+      e.preventDefault();
+    }
+  }, { passive: false });
+
+  // Disable Ctrl + (+ / - / 0) zoom shortcuts
+  window.addEventListener('keydown', function (e) {
+    if (e.ctrlKey && (
+        e.key === '+' ||
+        e.key === '-' ||
+        e.key === '=' ||
+        e.key === '0')) {
+      e.preventDefault();
+    }
+  });
+
+  // Block touch pinch zoom
+  ['gesturestart', 'gesturechange', 'gestureend'].forEach(evt => {
+    window.addEventListener(evt, e => e.preventDefault());
+  });
+  </script>
+
+</body>
+</html>
