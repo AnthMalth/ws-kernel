@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title></title>
+  <style>
+    /* Base */
+    html, body { margin:0; background:#000; overflow-x:hidden; }
+
+    /* Top bar (fixed overlay) */
+    .topbar { position:fixed; inset:0 0 auto 0; z-index:1000; pointer-events:none; }
+    .topbar__bar { width:100%; height:auto; display:block; }
+    .topbar__title{
+      position:fixed; z-index:1001; pointer-events:none;
+      top:clamp(16px,1.4vw,48px);
+      left:clamp(16px,2vw,80px);
+      height:clamp(56px,6vw,260px);
+      width:auto; display:block;
+    }
+
+    main { display:block; }
+
+    /* Shared panel markup */
+    .panel{ position:relative; line-height:0; }
+    .panel__img{ display:block; width:100vw; height:auto; transform:translateZ(0); }
+
+    /* Per-panel image (used for mobile BGs and desktop seam mask) */
+    .hero         { --panel-bg: url("Main/cosmetic_purple_wonder.webp"); }
+    .panel--peach { --panel-bg: url("Main/cosmetic_peach.webp"); }
+    .panel--blue  { --panel-bg: url("Main/cosmetic_blue.webp"); }
+    .panel--red   { --panel-bg: url("Main/cosmetic_red.webp"); }
+
+    /* ---------- DESKTOP / LARGE ---------- */
+    @media (min-width: 901px){
+      /* Generic seam protection (topper strip) */
+      .panel + .panel { margin-top:-2px; }
+      .panel::before{
+        content:"";
+        position:absolute;
+        left:0; right:0; top:-3px;
+        height:6px;
+        background: center top / 100% auto no-repeat var(--panel-bg);
+        pointer-events:none;
+      }
+
+      /* --- FIXES: disable topper for PEACH & BLUE; overlap the image instead --- */
+      .panel--peach::before,
+      .panel--blue::before { content:none; }
+
+      .panel--peach .panel__img,
+      .panel--blue  .panel__img { margin-top:-3px; } /* adjust to -8px if needed */
+    }
+
+    /* ---------- MOBILE ---------- */
+    @media (max-width: 900px){
+      html, body { height:100%; overflow-x:hidden; }
+
+      /* Top bar behaves like cover/zoom */
+      .topbar{ height:clamp(80px,18svh,220px); overflow:hidden; }
+      .topbar__bar{
+        position:absolute; inset:0; width:100%; height:100%;
+        object-fit:cover; object-position:center;
+      }
+      .topbar__title{
+        top:clamp(10px,3vw,24px);
+        left:clamp(12px,4vw,32px);
+        height:clamp(80px,12vw,200px);
+      }
+
+      /* Slides */
+      .panel{
+        min-height:100svh;
+        margin-top:-1px;                 /* tiny overlap to avoid hairlines */
+        background-position:center;
+        background-repeat:no-repeat;
+        background-size:cover;           /* fill + crop (zoomed look) */
+        background-image: var(--panel-bg);
+      }
+
+      /* Use backgrounds on mobile, hide inline images */
+      .panel__img{ display:none !important; }
+
+      /* Mobile hero uses the non-wonder purple */
+		.hero{          --panel-bg: url("Main/cosmetic_purple_mobile.webp"); }
+		.panel--peach{  --panel-bg: url("Main/cosmetic_peach_mobile.webp"); }
+		.panel--blue{   --panel-bg: url("Main/cosmetic_blue_mobile.webp"); }
+		.panel--red{    --panel-bg: url("Main/cosmetic_red_mobile.webp"); }    }
+  </style>
+</head>
+<body>
+
+  <div class="topbar">
+    <img class="topbar__bar" src="TopBar/TopBar.webp" alt="">
+  </div>
+  <img class="topbar__title" src="TopBar/TopBarTitle.webp" alt="">
+
+  <main>
+    <section class="panel hero">
+      <img class="panel__img" src="Main/cosmetic_purple_wonder.webp" alt="">
+    </section>
+
+    <section class="panel panel--peach">
+      <img class="panel__img" src="Main/cosmetic_peach.webp" alt="" loading="lazy">
+    </section>
+
+    <section class="panel panel--blue">
+      <img class="panel__img" src="Main/cosmetic_blue.webp" alt="" loading="lazy">
+    </section>
+
+    <section class="panel panel--red">
+      <img class="panel__img" src="Main/cosmetic_red.webp" alt="" loading="lazy">
+    </section>
+  </main>
+
+</body>
+</html>
