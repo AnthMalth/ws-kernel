@@ -3,10 +3,22 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title></title>
+
+  <title>Wonder Slices</title>
+
+  <link rel="icon" href="icon.png" type="image/png" sizes="any">
+  <link rel="apple-touch-icon" href="icon.png">
+  <meta name="theme-color" content="#000000">
+
+  <link rel="preload" as="image" href="TopBar/TopBar.webp">
+  <link rel="preload" as="image" href="TopBar/TopBarTitle.webp">
+  <link rel="preload" as="image" href="Main/cosmetic_purple_wonder.webp" media="(min-width: 901px)">
+  <link rel="preload" as="image" href="Main/cosmetic_purple_mobile.webp" media="(max-width: 900px)">
+
   <style>
     /* Base */
     html, body { margin:0; background:#000; overflow-x:hidden; }
+    img { max-width:100%; height:auto; }
 
     /* Top bar (fixed overlay) */
     .topbar { position:fixed; inset:0 0 auto 0; z-index:1000; pointer-events:none; }
@@ -82,34 +94,35 @@
       .panel__img{ display:none !important; }
 
       /* Mobile hero uses the non-wonder purple */
-		.hero{          --panel-bg: url("Main/cosmetic_purple_mobile.webp"); }
-		.panel--peach{  --panel-bg: url("Main/cosmetic_peach_mobile.webp"); }
-		.panel--blue{   --panel-bg: url("Main/cosmetic_blue_mobile.webp"); }
-		.panel--red{    --panel-bg: url("Main/cosmetic_red_mobile.webp"); }    }
+      .hero{          --panel-bg: url("Main/cosmetic_purple_mobile.webp"); }
+      .panel--peach{  --panel-bg: url("Main/cosmetic_peach_mobile.webp"); }
+      .panel--blue{   --panel-bg: url("Main/cosmetic_blue_mobile.webp"); }
+      .panel--red{    --panel-bg: url("Main/cosmetic_red_mobile.webp"); }
+    }
   </style>
 </head>
 <body>
 
-  <div class="topbar">
+  <div class="topbar" aria-hidden="true">
     <img class="topbar__bar" src="TopBar/TopBar.webp" alt="">
   </div>
-  <img class="topbar__title" src="TopBar/TopBarTitle.webp" alt="">
+  <img class="topbar__title" src="TopBar/TopBarTitle.webp" alt="" aria-hidden="true">
 
   <main>
-    <section class="panel hero">
-      <img class="panel__img" src="Main/cosmetic_purple_wonder.webp" alt="">
+    <section class="panel hero" aria-label="Purple Wonder">
+      <img class="panel__img" src="Main/cosmetic_purple_wonder.webp" alt="Purple cosmetic artwork">
     </section>
 
-    <section class="panel panel--peach">
-      <img class="panel__img" src="Main/cosmetic_peach.webp" alt="" loading="lazy">
+    <section class="panel panel--peach" aria-label="Peach">
+      <img class="panel__img" src="Main/cosmetic_peach.webp" alt="Peach cosmetic artwork" loading="lazy" decoding="async">
     </section>
 
-    <section class="panel panel--blue">
-      <img class="panel__img" src="Main/cosmetic_blue.webp" alt="" loading="lazy">
+    <section class="panel panel--blue" aria-label="Blue">
+      <img class="panel__img" src="Main/cosmetic_blue.webp" alt="Blue cosmetic artwork" loading="lazy" decoding="async">
     </section>
 
-    <section class="panel panel--red">
-      <img class="panel__img" src="Main/cosmetic_red.webp" alt="" loading="lazy">
+    <section class="panel panel--red" aria-label="Red">
+      <img class="panel__img" src="Main/cosmetic_red.webp" alt="Red cosmetic artwork" loading="lazy" decoding="async">
     </section>
   </main>
 
